@@ -18,7 +18,7 @@ def create_potential_figure():
         # else:
         #     # 本地開發環境使用 SQLite
         #     current_dir = os.path.dirname(os.path.abspath(__file__))
-        db_path = 'db_final.db' # os.path.join(current_dir, 'db_final.db')
+        db_path = 'db_final.sqlite3' # os.path.join(current_dir, 'db_final.db')
         conn = sqlite3.connect(db_path)
 
         # SQL 查詢

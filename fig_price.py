@@ -16,7 +16,7 @@ def create_price_figure(selected_boroughs=None):
         #     current_dir = os.path.dirname(os.path.abspath(__file__))
         #     db_path = os.path.join(current_dir, 'db_final.db')  # 本地開發環境使用 SQLite
 
-        db_path = 'db_final.db'
+        db_path = 'db_final.sqlite3'
 
         # 建立資料庫連線
         with sqlite3.connect(db_path) as conn:

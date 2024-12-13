@@ -15,7 +15,7 @@ def get_db_connection():
     # else:
     #     # 使用 SQLite 在本地開發環境
     # db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'db_final.db')
-    db_path = 'db_final.db'
+    db_path = 'db_final.sqlite3'
     conn = sqlite3.connect(db_path)
 
     return conn
