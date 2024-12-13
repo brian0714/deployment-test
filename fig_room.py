@@ -10,32 +10,34 @@ def create_room_figure(selected_boroughs=None, y_range=None):
     """創建房型分析箱型圖"""
     try:
         # 獲取資料庫路徑
-        if os.environ.get('ENV') == 'production':
-            db_path = os.environ.get('DATABASE_URL')  # Heroku 環境使用 DATABASE_URL
-        else:
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            db_path = os.path.join(current_dir, 'db_final.db')  # 本地開發環境使用 SQLite
+        # if os.environ.get('ENV') == 'production':
+        #     db_path = os.environ.get('DATABASE_URL')  # Heroku 環境使用 DATABASE_URL
+        # else:
+        #     current_dir = os.path.dirname(os.path.abspath(__file__))
+        #     db_path = os.path.join(current_dir, 'db_final.db')  # 本地開發環境使用 SQLite
+
+        db_path = 'db_final.db'
 
         # 建立資料庫連線
         with sqlite3.connect(db_path) as conn:
             # 基本查詢
             query = """
-            SELECT 
+            SELECT
                 b.borough_name AS borough,
                 l.listing_id,
                 h.host_name,
                 l.room_type,
                 l.price
-            FROM 
+            FROM
                 listings l
-            JOIN 
+            JOIN
                 locations loc ON l.listing_id = loc.listing_id
-            JOIN 
+            JOIN
                 borough b ON loc.borough_id = b.borough_id
             JOIN
                 hosts h ON l.host_id = h.host_id
-            WHERE 
-                l.price > 0 
+            WHERE
+                l.price > 0
                 AND l.price < 2000
             """
 
@@ -141,9 +143,9 @@ if __name__ == "__main__":
     app = dash.Dash(__name__)
 
     app.layout = html.Div([
-        html.H2("Room Type Analysis", 
+        html.H2("Room Type Analysis",
                 style={'text-align': 'center', 'margin-bottom': '20px'}),
-        
+
         # 行政區選擇
         html.Div([
             html.Label("Select Boroughs:", style={
@@ -202,7 +204,7 @@ if __name__ == "__main__":
             'marginBottom': '20px',
             'boxShadow': '0 2px 10px rgba(0,0,0,0.1)'
         }),
-        
+
         dcc.Graph(
             id="boxplot-graph",
             figure=create_room_figure(),
@@ -212,7 +214,7 @@ if __name__ == "__main__":
         'padding': '20px',
         'backgroundColor': '#f5f5f5'
     })
-    
+
     @app.callback(
         Output("boxplot-graph", "figure"),
         [Input("borough-checklist", "value"),
@@ -223,5 +225,5 @@ if __name__ == "__main__":
             selected_boroughs=selected_boroughs,
             y_range=price_range
         )
-    
+
     app.run_server(debug=True)

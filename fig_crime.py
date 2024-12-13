@@ -8,48 +8,50 @@ import psycopg2
 
 def get_db_connection():
     """根據環境返回正確的資料庫連線"""
-    if os.environ.get('ENV') == 'production':
-        # 使用 PostgreSQL 連線
-        DATABASE_URL = os.environ.get('DATABASE_URL')
-        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-    else:
-        # 使用 SQLite 在本地開發環境
-        db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'db_final.db')
-        conn = sqlite3.connect(db_path)
+    # if os.environ.get('ENV') == 'production':
+    #     # 使用 PostgreSQL 連線
+    #     DATABASE_URL = os.environ.get('DATABASE_URL')
+    #     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    # else:
+    #     # 使用 SQLite 在本地開發環境
+    # db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'db_final.db')
+    db_path = 'db_final.db'
+    conn = sqlite3.connect(db_path)
+
     return conn
 
 def create_crime_figure():
     """創建犯罪分布堆疊百分比柱狀圖"""
     query = """
     WITH CrimeCounts AS (
-        SELECT 
+        SELECT
             b.borough_name AS borough,
             s.crime_level AS crime_type,
             COUNT(s.Event_id) AS crime_count
-        FROM 
+        FROM
             borough b
-        LEFT JOIN 
+        LEFT JOIN
             security s ON b.borough_id = s.borough_id
-        GROUP BY 
+        GROUP BY
             b.borough_id, b.borough_name, s.crime_level
     ),
     BoroughTotals AS (
-        SELECT 
+        SELECT
             borough,
             SUM(crime_count) as total_crimes
-        FROM 
+        FROM
             CrimeCounts
-        GROUP BY 
+        GROUP BY
             borough
     )
-    SELECT 
+    SELECT
         c.borough,
         c.crime_type,
         c.crime_count,
         CAST(c.crime_count AS FLOAT) / b.total_crimes * 100 as crime_percentage
-    FROM 
+    FROM
         CrimeCounts c
-    JOIN 
+    JOIN
         BoroughTotals b ON c.borough = b.borough
     ORDER BY c.borough;
     """
@@ -77,7 +79,7 @@ def create_crime_figure():
         for crime_type in pivot_df.columns:
             counts = pivot_df[crime_type]
             percentages = pivot_pct[crime_type]
-            
+
             fig.add_trace(go.Bar(
                 x=pivot_df.index,
                 y=counts,
@@ -140,7 +142,7 @@ def create_crime_figure():
         )
 
         return fig
-    
+
     except Exception as e:
         print(f"Error creating crime figure: {e}")
         return go.Figure().update_layout(
@@ -154,19 +156,19 @@ def create_crime_figure():
             }]
         )
     finally:
-        conn.close()  
+        conn.close()
 
 # 測試用主程式
 if __name__ == "__main__":
     app = dash.Dash(__name__)
-    
+
     app.layout = html.Div([
-        html.H2("NYC Crime Distribution Analysis", 
+        html.H2("NYC Crime Distribution Analysis",
                 style={'text-align': 'center', 'color': '#333'}),
         dcc.Graph(
             figure=create_crime_figure(),
             config={"displayModeBar": False}
         )
     ])
-    
+
     app.run_server(debug=True)
