@@ -159,16 +159,16 @@ def create_crime_figure():
         conn.close()
 
 # 測試用主程式
-if __name__ == "__main__":
-    app = dash.Dash(__name__)
+# if __name__ == "__main__":
+#     app = dash.Dash(__name__)
 
-    app.layout = html.Div([
-        html.H2("NYC Crime Distribution Analysis",
-                style={'text-align': 'center', 'color': '#333'}),
-        dcc.Graph(
-            figure=create_crime_figure(),
-            config={"displayModeBar": False}
-        )
-    ])
+#     app.layout = html.Div([
+#         html.H2("NYC Crime Distribution Analysis",
+#                 style={'text-align': 'center', 'color': '#333'}),
+#         dcc.Graph(
+#             figure=create_crime_figure(),
+#             config={"displayModeBar": False}
+#         )
+#     ])
 
-    app.run_server(debug=True)
+#     app.run_server(debug=True)

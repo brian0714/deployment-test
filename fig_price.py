@@ -134,14 +134,14 @@ def create_price_figure(selected_boroughs=None):
 
 
 # 測試用主程式
-if __name__ == "__main__":
-    app = dash.Dash(__name__)
-    app.layout = html.Div([
-        html.H2("Price Analysis by Borough",
-                style={'text-align': 'center'}),
-        dcc.Graph(
-            figure=create_price_figure(),
-            config={"displayModeBar": False}
-        )
-    ])
-    app.run_server(debug=True)
+# if __name__ == "__main__":
+#     app = dash.Dash(__name__)
+#     app.layout = html.Div([
+#         html.H2("Price Analysis by Borough",
+#                 style={'text-align': 'center'}),
+#         dcc.Graph(
+#             figure=create_price_figure(),
+#             config={"displayModeBar": False}
+#         )
+#     ])
+#     app.run_server(debug=True)

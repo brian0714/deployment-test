@@ -150,16 +150,16 @@ def create_potential_figure():
 
 
 # 測試用主程式
-if __name__ == "__main__":
-    app = dash.Dash(__name__)
+# if __name__ == "__main__":
+#     app = dash.Dash(__name__)
 
-    app.layout = html.Div([
-        html.H2("NYC Tourism Revenue vs. Crime Score",
-                style={'text-align': 'left'}),
-        dcc.Graph(
-            figure=create_potential_figure(),
-            config={"displayModeBar": False}
-        )
-    ])
+#     app.layout = html.Div([
+#         html.H2("NYC Tourism Revenue vs. Crime Score",
+#                 style={'text-align': 'left'}),
+#         dcc.Graph(
+#             figure=create_potential_figure(),
+#             config={"displayModeBar": False}
+#         )
+#     ])
 
-    app.run_server(debug=True)
+#     app.run_server(debug=True)

@@ -11,7 +11,7 @@ from PIL import Image
 import os
 import json
 
-app = dash.Dash(__name__,assets_folder='assets')
+app = dash.Dash(__name__, assets_folder='assets')
 server = app.server
 
 # 環境變數設置

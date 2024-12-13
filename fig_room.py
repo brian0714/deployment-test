@@ -139,91 +139,91 @@ def create_room_figure(selected_boroughs=None, y_range=None):
         )
 
 # 測試用主程式
-if __name__ == "__main__":
-    app = dash.Dash(__name__)
+# if __name__ == "__main__":
+#     app = dash.Dash(__name__)
 
-    app.layout = html.Div([
-        html.H2("Room Type Analysis",
-                style={'text-align': 'center', 'margin-bottom': '20px'}),
+#     app.layout = html.Div([
+#         html.H2("Room Type Analysis",
+#                 style={'text-align': 'center', 'margin-bottom': '20px'}),
 
-        # 行政區選擇
-        html.Div([
-            html.Label("Select Boroughs:", style={
-                'fontSize': '16px',
-                'fontWeight': 'bold',
-                'marginBottom': '10px',
-                'color': '#333'
-            }),
-            dcc.Checklist(
-                id="borough-checklist",
-                options=[
-                    {"label": " Manhattan", "value": "Manhattan"},
-                    {"label": " Brooklyn", "value": "Brooklyn"},
-                    {"label": " Queens", "value": "Queens"},
-                    {"label": " Bronx", "value": "Bronx"},
-                    {"label": " Staten Island", "value": "Staten Island"}
-                ],
-                value=[],
-                inline=True,
-                style={'fontSize': '14px', 'margin': '10px'}
-            )
-        ], style={
-            'padding': '20px',
-            'backgroundColor': 'white',
-            'borderRadius': '10px',
-            'marginBottom': '20px',
-            'boxShadow': '0 2px 10px rgba(0,0,0,0.1)'
-        }),
+#         # 行政區選擇
+#         html.Div([
+#             html.Label("Select Boroughs:", style={
+#                 'fontSize': '16px',
+#                 'fontWeight': 'bold',
+#                 'marginBottom': '10px',
+#                 'color': '#333'
+#             }),
+#             dcc.Checklist(
+#                 id="borough-checklist",
+#                 options=[
+#                     {"label": " Manhattan", "value": "Manhattan"},
+#                     {"label": " Brooklyn", "value": "Brooklyn"},
+#                     {"label": " Queens", "value": "Queens"},
+#                     {"label": " Bronx", "value": "Bronx"},
+#                     {"label": " Staten Island", "value": "Staten Island"}
+#                 ],
+#                 value=[],
+#                 inline=True,
+#                 style={'fontSize': '14px', 'margin': '10px'}
+#             )
+#         ], style={
+#             'padding': '20px',
+#             'backgroundColor': 'white',
+#             'borderRadius': '10px',
+#             'marginBottom': '20px',
+#             'boxShadow': '0 2px 10px rgba(0,0,0,0.1)'
+#         }),
 
-        # 價格範圍選擇
-        html.Div([
-            html.Label("Select Price Range:", style={
-                'fontSize': '16px',
-                'fontWeight': 'bold',
-                'marginBottom': '10px',
-                'color': '#333'
-            }),
-            dcc.RangeSlider(
-                id='price-range-slider',
-                min=0,
-                max=2000,
-                step=100,
-                marks={
-                    0: '$0',
-                    500: '$500',
-                    1000: '$1,000',
-                    1500: '$1,500',
-                    2000: '$2,000'
-                },
-                value=[0, 2000]
-            )
-        ], style={
-            'padding': '20px',
-            'backgroundColor': 'white',
-            'borderRadius': '10px',
-            'marginBottom': '20px',
-            'boxShadow': '0 2px 10px rgba(0,0,0,0.1)'
-        }),
+#         # 價格範圍選擇
+#         html.Div([
+#             html.Label("Select Price Range:", style={
+#                 'fontSize': '16px',
+#                 'fontWeight': 'bold',
+#                 'marginBottom': '10px',
+#                 'color': '#333'
+#             }),
+#             dcc.RangeSlider(
+#                 id='price-range-slider',
+#                 min=0,
+#                 max=2000,
+#                 step=100,
+#                 marks={
+#                     0: '$0',
+#                     500: '$500',
+#                     1000: '$1,000',
+#                     1500: '$1,500',
+#                     2000: '$2,000'
+#                 },
+#                 value=[0, 2000]
+#             )
+#         ], style={
+#             'padding': '20px',
+#             'backgroundColor': 'white',
+#             'borderRadius': '10px',
+#             'marginBottom': '20px',
+#             'boxShadow': '0 2px 10px rgba(0,0,0,0.1)'
+#         }),
 
-        dcc.Graph(
-            id="boxplot-graph",
-            figure=create_room_figure(),
-            config={"displayModeBar": False}
-        )
-    ], style={
-        'padding': '20px',
-        'backgroundColor': '#f5f5f5'
-    })
+#         dcc.Graph(
+#             id="boxplot-graph",
+#             figure=create_room_figure(),
+#             config={"displayModeBar": False}
+#         )
+#     ], style={
+#         'padding': '20px',
+#         'backgroundColor': '#f5f5f5'
+#     })
 
-    @app.callback(
-        Output("boxplot-graph", "figure"),
-        [Input("borough-checklist", "value"),
-         Input("price-range-slider", "value")]
-    )
-    def update_boxplot(selected_boroughs, price_range):
-        return create_room_figure(
-            selected_boroughs=selected_boroughs,
-            y_range=price_range
-        )
+#     @app.callback(
+#         Output("boxplot-graph", "figure"),
+#         [Input("borough-checklist", "value"),
+#          Input("price-range-slider", "value")]
+#     )
+#     def update_boxplot(selected_boroughs, price_range):
+#         return create_room_figure(
+#             selected_boroughs=selected_boroughs,
+#             y_range=price_range
+#         )
 
-    app.run_server(debug=True)
+#     app.run_server(debug=True)
